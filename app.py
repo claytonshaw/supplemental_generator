@@ -6,7 +6,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 instructions = [
-    "Step 1: Upload your file.",
+    "Step 1: Upload your files.",
     "Step 2: Set your parameters.",
     "Step 3: Click the 'Generate' button.",
     "Step 4: View the results displayed below.",
@@ -32,7 +32,8 @@ def run():
 
     st.header('File Upload')
     st.cache()
-    file_upload = st.file_uploader("Choose a file")
+    data_upload = st.file_uploader("Select Supplemental Data", type='xlsx')
+    inventory_upload = st.file_uploader('Select Inventory Data', type='csv')
 
     st.header('Parameters List')
     # list of parameters
@@ -40,11 +41,10 @@ def run():
     vendor_packs_to_send = st.number_input(label = 'Vendor Packs to Send', step=1) # number of vendor packs to send to stores
     use_available = st.checkbox('Use "Available - Split Pack" (Default is "On Hand")') # use either on hand or the available inventory (doesn't matter if you have just_find_need as "True")
     sort_by_zero_oh = st.checkbox('Sort by Zero On Hand at Stores') # if true we will target stores that have zero on hand first
-    use_custom_inventory = st.checkbox('Use Custom Inventory Report') #switch to true to use the custom inventory report
     just_find_need = st.checkbox('Just find Need (Makes BLKST on hand qty 1 million to find need at stores)') # makes the on hand qty 1 million so we can find the need and not be limited by what is on hand (switch to false to use either on hand or available)
 
     if st.button('Generate'):
-        result_df, sto_single = supplemental_order(file_upload,use_custom_inventory,use_custom_vendor_packs, vendor_packs_to_send,
+        result_df, sto_single = supplemental_order(data_upload,inventory_upload,use_custom_vendor_packs, vendor_packs_to_send,
                     use_available,sort_by_zero_oh,just_find_need)
 
         def convert_df(df):
