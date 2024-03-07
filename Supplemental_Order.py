@@ -113,9 +113,6 @@ def supplemental_order(file_upload,use_custom_inventory=False,use_custom_vendor_
         # dropping rows where BLKST isn't sending anything
         sto_single = sto_single.loc[sto_single['vnpks_sent_dc'] != 0]
 
-    # exporting data to new files
-    # df_filtered.to_excel(r"Supplemental Order TESTER.xlsx")
-    # sto_single.to_excel(r"sto_single_.xlsx")
     sto_single = sto_single
     # printing total vnpks sent and number of stores by item
     sum_by_item = sto_single.groupby('Vendor Stk Nbr')['vnpks_sent_dc'].sum()
