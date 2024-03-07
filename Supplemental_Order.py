@@ -106,7 +106,7 @@ def supplemental_order(file_upload,use_custom_inventory=False,use_custom_vendor_
         dc_columns = ['Prime Item Nbr', 'Vendor Stk Nbr','Store Nbr','vnpks_sent_dc']
 
         try:
-            sto_single = pd.concat(sto_single, df_filtered[dc_columns])
+            sto_single = pd.concat([sto_single,df_filtered[dc_columns]], ignore_index=True)
         except ValueError:
             pass
 
