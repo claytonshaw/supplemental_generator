@@ -36,7 +36,7 @@ def run():
 
     st.header('Parameters List')
     # list of parameters
-    use_custom_vendor_packs = st.checkbox('Use Custom Vendor Packs') # switch this to False to use Max Shelf Qty as the cut off
+    use_custom_vendor_packs = st.checkbox('Use Custom Vendor Packs (default is max shelf qty)') # switch this to False to use Max Shelf Qty as the cut off
     vendor_packs_to_send = st.number_input(label = 'Vendor Packs to Send', step=1) # number of vendor packs to send to stores
     use_available = st.checkbox('Use "Available - Split Pack" (Default is "On Hand")') # use either on hand or the available inventory (doesn't matter if you have just_find_need as "True")
     sort_by_zero_oh = st.checkbox('Sort by Zero On Hand at Stores') # if true we will target stores that have zero on hand first
