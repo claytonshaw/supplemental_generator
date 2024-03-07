@@ -14,7 +14,7 @@ def blank_rows(file_path):
     return blank_rows
 
 
-def supplemental_order(file_upload,use_custom_inventory=False,use_custom_vendor_packs=False, vendor_packs_to_send=0,
+def supplemental_order(file_upload,inventory_upload,use_custom_vendor_packs=False, vendor_packs_to_send=0,
                        use_available=False,sort_by_zero_oh=True,just_find_need=False):
     import pandas as pd
     import numpy as np
@@ -23,10 +23,7 @@ def supplemental_order(file_upload,use_custom_inventory=False,use_custom_vendor_
     unwanted_states = ['AK','HI','PR']
     df = df[~df['State'].isin(unwanted_states)]
 
-    if use_custom_inventory:
-        available_inventory = pd.read_csv(r"Available Inventory 1.csv") # use this dataset if you want to customize the on hand
-    else:
-        available_inventory = pd.read_excel(r"Available Inventory.xlsx", skiprows=1) # this dataset gets updated from domo
+    available_inventory = pd.read_csv(inventory_upload) # use this dataset if you want to customize the on hand
 
     # getting the unique list of SKU's and saving it to dataframe
     unique_sku = df['Vendor Stk Nbr'].unique()
