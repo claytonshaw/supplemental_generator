@@ -18,6 +18,8 @@ def supplemental_order(file_upload,inventory_upload,use_custom_vendor_packs=Fals
                        use_available=False,sort_by_zero_oh=True,just_find_need=False):
     import pandas as pd
     import numpy as np
+    import warnings
+    warnings.filterwarnings('ignore')                       
     df = pd.read_excel(file_upload, skiprows=blank_rows(file_upload))
 
     unwanted_states = ['AK','HI','PR']
