@@ -6,11 +6,11 @@ import warnings
 warnings.filterwarnings('ignore')
 
 instructions = [
-    "Step 1: Upload your files.",
-    "Step 2: Set your parameters.",
-    "Step 3: Click the 'Generate' button.",
-    "Step 4: View the results displayed below.",
-    "Step 5: If satisfied download the sto single report."
+    'Step 1: Upload your files.',
+    'Step 2: Set your parameters.',
+    'Step 3: Click the "Generate" button.',
+    'Step 4: View the results displayed below.',
+    'Step 5: If satisfied download the "sto single" report.'
 ]
 
 # main app function
