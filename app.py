@@ -33,7 +33,7 @@ def run():
     st.header('File Upload')
     st.cache()
     data_upload = st.file_uploader("Upload Supplemental Data", type='xlsx')
-    inventory_upload = st.file_uploader('Upload Inventory Data', type='csv')
+    inventory_upload = st.file_uploader('Upload Inventory Data', type='xlsx')
 
     st.header('Parameters List')
     # list of parameters
