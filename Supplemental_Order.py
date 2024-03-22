@@ -61,7 +61,7 @@ def supplemental_order(file_upload, inventory_upload, use_custom_vendor_packs=Fa
         else:
             df_filtered = df_filtered.sort_values('pipe_need', ascending=False).reset_index() # sorting to rank stores with the highest pipe_need
 
-        # getting available inventory 
+        # getting available inventory (next step would be to link this to domo so that if you don't want to use a custom dataset you won't need to upload anything. 
         blkst_oh = available_inventory[available_inventory['Item'] == item]
         if just_find_need:
             available_inv = float(1000000) # makes the on hand qty 1 million so we can find the need and not be limited by what is on hand
