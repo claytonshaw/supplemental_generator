@@ -45,8 +45,8 @@ def run():
     weeks_forecast = st.slider('Weeks Forecast', min_value=6, max_value=13, step=1)
 
     if st.button('Generate'):
-        result_df, sto_single = supplemental_order(data_upload,inventory_upload,use_custom_vendor_packs, vendor_packs_to_send,
-                    use_available,sort_by_zero_oh,just_find_need)
+        result_df, sto_single = supplemental_order(data_upload, inventory_upload, use_custom_vendor_packs, vendor_packs_to_send,
+                    use_available, sort_by_zero_oh, just_find_need, weeks_forecast)
 
         def convert_df(df):
             return df.to_csv(index=False).encode('utf-8')
