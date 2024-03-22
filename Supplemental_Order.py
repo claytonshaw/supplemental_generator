@@ -25,7 +25,7 @@ def supplemental_order(file_upload,inventory_upload,use_custom_vendor_packs=Fals
     unwanted_states = ['AK','HI','PR']
     df = df[~df['State'].isin(unwanted_states)]
 
-    available_inventory = pd.read_excel(inventory_upload) # inventory upload
+    available_inventory = pd.read_excel(inventory_upload, skiprows=1) # inventory upload
 
     # getting the unique list of SKU's and saving it to dataframe
     unique_sku = df['Vendor Stk Nbr'].unique()
