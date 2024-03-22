@@ -56,7 +56,7 @@ def supplemental_order(file_upload,inventory_upload,use_custom_vendor_packs=Fals
         df_filtered = df_filtered[df_filtered.iloc[:, 6] == 1] # filtering to only valid stores
         df_filtered = df_filtered[df_filtered['Store Type Descr'] != 'BASE STR Nghbrhd Mkt'] # filtering out Neighborhood Market stores
         if sort_by_zero_oh:
-            curr_str_on_hand_qy = df_filtered.iloc[:, 11]
+            curr_str_on_hand_qy = df_filtered.iloc[:, 7]
             df_filtered = df_filtered.sort_values(by = [curr_str_on_hand_qy, 'pipe_need'], ascending=[False, False]).reset_index() # sort by stores that have zero on hand and pipe need
         else:
             df_filtered = df_filtered.sort_values('pipe_need', ascending=False).reset_index() # sorting to rank stores with the highest pipe_need
