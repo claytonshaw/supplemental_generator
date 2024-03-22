@@ -42,10 +42,11 @@ def run():
     use_available = st.checkbox('Use "Available - Split Pack" (Default is "On Hand")') # use either on hand or the available inventory (doesn't matter if you have just_find_need as "True")
     sort_by_zero_oh = st.checkbox('Sort by Zero On Hand at Stores') # if true we will target stores that have zero on hand first
     just_find_need = st.checkbox('Just find Need (Makes BLKST on hand qty 1 million to find need at stores)') # makes the on hand qty 1 million so we can find the need and not be limited by what is on hand (switch to false to use either on hand or available)
-
+    weeks_forecast = st.slider('Week Forecast', min_value=6, max_value=13, step=1)
+    
     if st.button('Generate'):
         result_df, sto_single = supplemental_order(data_upload,inventory_upload,use_custom_vendor_packs, vendor_packs_to_send,
-                    use_available,sort_by_zero_oh,just_find_need)
+                    use_available,sort_by_zero_oh,just_find_need, weeks_forecast)
 
         def convert_df(df):
             return df.to_csv(index=False).encode('utf-8')
