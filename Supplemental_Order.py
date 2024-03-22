@@ -14,8 +14,8 @@ def blank_rows(file_path):
     return blank_rows
 
 
-def supplemental_order(file_upload,inventory_upload,use_custom_vendor_packs=False, vendor_packs_to_send=0,
-                       use_available=False,sort_by_zero_oh=True,just_find_need=False):
+def supplemental_order(file_upload, inventory_upload, use_custom_vendor_packs=False, vendor_packs_to_send=0,
+                       use_available=False, sort_by_zero_oh=True, just_find_need=False, weeks_forecast=6):
     import pandas as pd
     import numpy as np
     import warnings
@@ -53,10 +53,11 @@ def supplemental_order(file_upload,inventory_upload,use_custom_vendor_packs=Fals
 
     for item in unique_sku:
         df_filtered = df[df['Vendor Stk Nbr'] == item]
-        df_filtered = df_filtered[df_filtered['Curr Valid Store/Item Comb.'] == 1] # filtering to only valid stores
+        df_filtered = df_filtered[df_filtered.iloc[:,6] == 1] # filtering to only valid stores
         df_filtered = df_filtered[df_filtered['Store Type Descr'] != 'BASE STR Nghbrhd Mkt'] # filtering out Neighborhood Market stores
         if sort_by_zero_oh:
-            df_filtered = df_filtered.sort_values(by = ['Curr Str On Hand Qty', 'pipe_need'], ascending=[False, False]).reset_index() # sort by stores that have zero on hand and pipe need
+            curr_str_on_hand_qty = df_filtered.columns[11]
+            df_filtered = df_filtered.sort_values(by = [curr_str_on_hand_qty, 'pipe_need'], ascending=[False, False]).reset_index() # sort by stores that have zero on hand and pipe need
         else:
             df_filtered = df_filtered.sort_values('pipe_need', ascending=False).reset_index() # sorting to rank stores with the highest pipe_need
 
