@@ -20,12 +20,12 @@ def supplemental_order(file_upload,inventory_upload,use_custom_vendor_packs=Fals
     import numpy as np
     import warnings
     warnings.filterwarnings('ignore')
-    df = pd.read_excel(file_upload, skiprows=blank_rows(file_upload))
+    df = pd.read_excel(file_upload)
 
     unwanted_states = ['AK','HI','PR']
     df = df[~df['State'].isin(unwanted_states)]
 
-    available_inventory = pd.read_excel(inventory_upload, skiprows=1) # inventory upload
+    available_inventory = pd.read_excel(inventory_upload, skiprows=1) # inventory upload    
 
     # creating units needed calculation
     df['wk_fcst'] = df.iloc[:,16:weeks_forecast+16].sum(axis=1) # summing each weeks forecast to get a total 6 week forecast
@@ -45,10 +45,10 @@ def supplemental_order(file_upload,inventory_upload,use_custom_vendor_packs=Fals
         df['pipe_need'] = df['pipe_need'] / df['Vnpk Qty'] # converting to vendor packs
         df['pipe_need'] = df['pipe_need'].apply(np.ceil) # rounding up to the nearest whole number
 
-    # filtering to valid stores only.
+    # filtering to valid stores
     df = df[df.iloc[:, 6] == 1]
 
-    # getting the unique list of SKU's
+    # getting unique list after filtered to valid stores only
     unique_sku = df['Vendor Stk Nbr'].unique().astype('int')
 
     #creating an empty dataframe for the loop
@@ -56,6 +56,7 @@ def supplemental_order(file_upload,inventory_upload,use_custom_vendor_packs=Fals
 
     for item in unique_sku:
         df_filtered = df[df['Vendor Stk Nbr'] == item]
+        #df_filtered = df_filtered[df_filtered.iloc[:, 6] == 1] # filtering to only valid stores
         df_filtered = df_filtered[df_filtered['Store Type Descr'] != 'BASE STR Nghbrhd Mkt'] # filtering out Neighborhood Market stores
         if sort_by_zero_oh:
             curr_str_on_hand_qy = df_filtered.columns[11]
