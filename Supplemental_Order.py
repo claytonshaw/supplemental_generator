@@ -15,7 +15,7 @@ def blank_rows(file_path):
 
 
 def supplemental_order(file_upload,inventory_upload,use_custom_vendor_packs=False, vendor_packs_to_send=0,
-                       use_available=False,sort_by_zero_oh=True,just_find_need=False, weeks_forecast=6):
+                       use_available=False,sort_by_zero_oh=False,just_find_need=False, weeks_forecast=6):
     import pandas as pd
     import numpy as np
     import warnings
