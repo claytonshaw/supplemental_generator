@@ -27,9 +27,6 @@ def supplemental_order(file_upload,inventory_upload,use_custom_vendor_packs=Fals
 
     available_inventory = pd.read_excel(inventory_upload, skiprows=1) # inventory upload
 
-    # getting the unique list of SKU's and saving it to dataframe
-    unique_sku = df['Vendor Stk Nbr'].unique()
-
     # creating units needed calculation
     df['wk_fcst'] = df.iloc[:,16:weeks_forecast+16].sum(axis=1) # summing each weeks forecast to get a total 6 week forecast
     df['pipe_minus_fcst'] = df.iloc[:, 15] - df['wk_fcst'] # getting pipeline minus forecast
@@ -48,12 +45,17 @@ def supplemental_order(file_upload,inventory_upload,use_custom_vendor_packs=Fals
         df['pipe_need'] = df['pipe_need'] / df['Vnpk Qty'] # converting to vendor packs
         df['pipe_need'] = df['pipe_need'].apply(np.ceil) # rounding up to the nearest whole number
 
+    # filtering to valid stores only.
+    df = df[df.iloc[:, 6] == 1]
+
+    # getting the unique list of SKU's
+    unique_sku = df['Vendor Stk Nbr'].unique().astype('int')
+
     #creating an empty dataframe for the loop
     sto_single = pd.DataFrame()
 
     for item in unique_sku:
         df_filtered = df[df['Vendor Stk Nbr'] == item]
-        df_filtered = df_filtered[df_filtered.iloc[:, 6] == 1] # filtering to only valid stores
         df_filtered = df_filtered[df_filtered['Store Type Descr'] != 'BASE STR Nghbrhd Mkt'] # filtering out Neighborhood Market stores
         if sort_by_zero_oh:
             curr_str_on_hand_qy = df_filtered.columns[11]
