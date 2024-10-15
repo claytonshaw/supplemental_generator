@@ -17,7 +17,6 @@ instructions = [
 def run():
 
     from PIL import Image
-    #image = Image.open("C:/Users/clayton/Downloads/blackstone-transparent.png")
     logo = Image.open("blackstone-transparent.png")
 
     #st.image(image,use_column_width=False)
